@@ -1,0 +1,320 @@
+<!--
+Arquivo: index.html
+Descrição: Site vitrine interativo para farmácia. Salve como index.html e abra no navegador.
+Instruções de deploy rápido:
+ - Local: abra index.html no navegador.
+ - GitHub Pages: criar repositório, adicionar index.html na branch main, habilitar Pages.
+ - Netlify/Vercel: arraste o arquivo para o painel ou conecte o repositório.
+-->
+
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Farmácia Vida+ — Saúde ao seu alcance</title>
+  <meta name="description" content="Farmácia Vida+ — produtos, horários e serviços. Entrega rápida e atendimento humano." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--accent:#0ea5a4;--accent-2:#06b6d4}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+    .glass{backdrop-filter: blur(6px); background: rgba(255,255,255,0.55)}
+    /* simples indicador do carousel */
+    .dot{width:8px;height:8px;border-radius:9999px;background:#ddd;display:inline-block;margin:0 6px}
+    .dot.active{background:var(--accent)}
+    /* botão flutuante */
+    .fab{position:fixed;right:20px;bottom:20px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white;padding:14px;border-radius:9999px;box-shadow:0 10px 30px rgba(6,95,70,0.15);z-index:50}
+  </style>
+</head>
+<body class="bg-gradient-to-b from-white via-slate-50 to-sky-50 text-slate-800">
+  <!-- NAV -->
+  <header class="container mx-auto p-4 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <div class="w-12 h-12 rounded-lg bg-white shadow flex items-center justify-center">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v20" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 9h14" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 15h14" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <h1 class="text-xl font-extrabold">Farmácia <span style="color:var(--accent)">Vida+</span></h1>
+        <p class="text-sm text-slate-500">Saúde, confiança e entrega rápida</p>
+      </div>
+    </div>
+    <nav class="hidden md:flex gap-6 items-center">
+      <a href="#servicos" class="hover:underline">Serviços</a>
+      <a href="#produtos" class="hover:underline">Produtos</a>
+      <a href="#sobre" class="hover:underline">Sobre</a>
+      <a href="#contato" class="px-4 py-2 rounded-lg glass border border-slate-200">Fale Conosco</a>
+    </nav>
+    <div class="md:hidden">
+      <button id="menuBtn" class="p-2 bg-white rounded-lg shadow"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="#0f172a" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="container mx-auto p-4 md:p-8 grid md:grid-cols-2 gap-8 items-center">
+    <div class="space-y-6">
+      <h2 class="text-4xl md:text-5xl font-extrabold leading-tight">Farmácia Vida+: <span style="color:var(--accent)">Cuidando da sua saúde</span></h2>
+      <p class="text-slate-600 max-w-xl">Entrega rápida, atendimento humano e ampla linha de medicamentos, cosméticos e itens de bem-estar. Faça seu pedido online ou visite nossa loja.</p>
+      <div class="flex gap-4">
+        <a href="#produtos" class="px-6 py-3 rounded-lg bg-gradient-to-r from-teal-500 to-cyan-400 text-white font-semibold shadow hover:scale-105 transform transition">Ver Produtos</a>
+        <a href="#contato" class="px-6 py-3 rounded-lg glass border border-slate-200">Agende uma Consulta</a>
+      </div>
+      <div class="mt-3 text-sm text-slate-500">Atendimento: <strong>Seg–Sáb 8:00–20:00</strong> • Entrega em até 24h na cidade</div>
+
+      <!-- Destaques -->
+      <div class="grid grid-cols-2 gap-3 mt-6">
+        <div class="p-4 bg-white rounded-lg shadow flex items-center gap-3">
+          <div class="p-3 rounded-md bg-emerald-50 text-emerald-600">🚚</div>
+          <div>
+            <div class="text-sm font-semibold">Entrega rápida</div>
+            <div class="text-xs text-slate-500">24 horas em áreas urbanas</div>
+          </div>
+        </div>
+        <div class="p-4 bg-white rounded-lg shadow flex items-center gap-3">
+          <div class="p-3 rounded-md bg-blue-50 text-blue-600">💊</div>
+          <div>
+            <div class="text-sm font-semibold">Medicamentos e genéricos</div>
+            <div class="text-xs text-slate-500">Linha completa e consulta farmacêutica</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mockup / cartão interativo -->
+    <div class="relative">
+      <div class="p-6 rounded-2xl glass shadow-lg">
+        <div class="mb-4 flex justify-between items-center">
+          <div>
+            <div class="text-xs text-slate-500">Faça seu pedido online</div>
+            <div class="text-lg font-semibold">Entrega em até 24h</div>
+          </div>
+          <div class="text-sm text-emerald-600 font-bold">24h</div>
+        </div>
+        <div class="border border-slate-100 rounded-lg overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1580281657521-4f9f3c3b2d79?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder" alt="farmacia" class="w-full h-48 object-cover">
+          <div class="p-4">
+            <div class="flex justify-between items-center">
+              <div>
+                <div class="text-sm font-semibold">Kit Bem-Estar</div>
+                <div class="text-xs text-slate-500">Vitaminas + hidratante</div>
+              </div>
+              <div class="text-lg font-bold">R$ 79,90</div>
+            </div>
+            <div class="mt-4 flex gap-2">
+              <button class="flex-1 px-3 py-2 rounded-lg bg-gradient-to-r from-indigo-500 to-cyan-500 text-white font-semibold" onclick="addToCart('Kit Bem-Estar',79.9)">Adicionar</button>
+              <button class="px-3 py-2 rounded-lg border border-slate-200 glass" onclick="openQuickView('Kit Bem-Estar','Inclui vitaminas A, C e hidratante. Entrega em 24h.',79.9)">Ver</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="absolute -left-6 -top-6 rotate-6 bg-gradient-to-br from-yellow-200 to-pink-100 p-6 rounded-2xl shadow-lg hidden md:block">
+        <div class="text-sm text-slate-600">Promoção</div>
+        <div class="text-2xl font-extrabold">-15% em OTC</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Produtos -->
+  <section id="produtos" class="container mx-auto p-4 md:p-8">
+    <h3 class="text-2xl font-bold mb-4">Produtos em destaque</h3>
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- card produto repetível -->
+      <template id="productTpl">
+        <div class="p-4 bg-white rounded-xl shadow group">
+          <div class="h-40 bg-slate-50 rounded-lg overflow-hidden flex items-center justify-center">
+            <img class="object-contain h-32" src="" alt="produto">
+          </div>
+          <div class="mt-3">
+            <div class="font-semibold">Nome</div>
+            <div class="text-xs text-slate-500">Descrição curta</div>
+            <div class="mt-2 flex items-center justify-between">
+              <div class="text-lg font-bold">R$ 0,00</div>
+              <div class="flex gap-2">
+                <button class="px-3 py-1 rounded-md text-sm glass border" onclick="openQuickView('','','')">Ver</button>
+                <button class="px-3 py-1 rounded-md text-sm bg-gradient-to-r from-teal-500 to-cyan-400 text-white" onclick="addToCart('Produto',0)">Adicionar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <div id="productGrid"></div>
+    </div>
+  </section>
+
+  <!-- Serviços e sobre -->
+  <section id="servicos" class="container mx-auto p-4 md:p-8">
+    <div class="grid md:grid-cols-2 gap-8 items-start">
+      <div>
+        <h3 class="text-2xl font-bold">Nossos serviços</h3>
+        <ul class="mt-4 space-y-3 text-slate-600">
+          <li>• Avaliação farmacêutica e orientação de uso de medicamentos</li>
+          <li>• Entrega em domicílio em até 24h (áreas urbanas)</li>
+          <li>• Aplicação de vacinas mediante agendamento</li>
+          <li>• Programa de fidelidade com descontos exclusivos</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-2xl font-bold">Sobre a farmácia</h3>
+        <p class="mt-4 text-slate-600">Fundada para oferecer cuidado com empatia. Nossa equipe é formada por farmacêuticos registrados e atendemos com foco no bem-estar do cliente.</p>
+        <div class="mt-4 text-sm text-slate-500">CNPJ: 00.000.000/0000-00 • Inscrição CRF</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contato -->
+  <section id="contato" class="container mx-auto p-4 md:p-8">
+    <div class="bg-white rounded-2xl shadow p-6 md:flex gap-6 items-start">
+      <div class="md:w-1/2">
+        <h3 class="text-2xl font-bold">Fale conosco</h3>
+        <p class="text-slate-600 mt-2">Preencha o formulário ou ligue: <strong>(00) 90000-0000</strong></p>
+
+        <form id="contactForm" class="mt-4 space-y-3">
+          <div>
+            <label class="text-sm">Nome</label>
+            <input required name="name" class="w-full mt-1 p-3 border rounded-lg" />
+          </div>
+          <div>
+            <label class="text-sm">Telefone ou e-mail</label>
+            <input required name="contact" class="w-full mt-1 p-3 border rounded-lg" />
+          </div>
+          <div>
+            <label class="text-sm">Mensagem</label>
+            <textarea required name="message" class="w-full mt-1 p-3 border rounded-lg" rows="4"></textarea>
+          </div>
+          <div>
+            <button type="submit" class="px-5 py-3 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-400 text-white font-semibold">Enviar mensagem</button>
+          </div>
+        </form>
+        <div id="formMsg" class="mt-3 text-sm text-emerald-600 hidden">Mensagem enviada! Entraremos em contato em breve.</div>
+      </div>
+      <div class="md:w-1/2">
+        <h4 class="font-semibold">Onde estamos</h4>
+        <div class="mt-3">
+          <!-- Substitua o src pelo link do google maps da sua loja -->
+          <iframe class="w-full h-64 rounded-lg" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.1234567890123!2d-46.633309!3d-23.55052!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDMzJzUxLjAiUyA0NsKwMzgnMzEuMCJX!5e0!3m2!1spt-BR!2sbr!4v0000000000000" style="border:0;filter:grayscale(20%);"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="mt-12 py-8 bg-white">
+    <div class="container mx-auto text-center text-slate-600">
+      <div class="mb-3">© <strong>Farmácia Vida+</strong> — Cuidando da sua saúde</div>
+      <div class="text-sm">Siga-nos: Instagram / Facebook</div>
+    </div>
+  </footer>
+
+  <!-- Floating cart / CTA -->
+  <button class="fab" id="cartBtn">🛒 Carrinho (<span id="cartCount">0</span>)</button>
+
+  <!-- Quick View Modal -->
+  <div id="modal" class="fixed inset-0 bg-black/40 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-xl w-11/12 md:w-1/2 p-6 shadow-lg">
+      <div class="flex justify-between items-start">
+        <div>
+          <h4 id="modalTitle" class="text-xl font-bold">Título</h4>
+          <div id="modalPrice" class="text-emerald-600 font-semibold mt-1">R$0,00</div>
+        </div>
+        <button onclick="closeModal()" class="p-2">✖</button>
+      </div>
+      <p id="modalDesc" class="mt-4 text-slate-600">Descrição</p>
+      <div class="mt-6 flex gap-3">
+        <button class="px-4 py-2 rounded-lg bg-gradient-to-r from-teal-500 to-cyan-400 text-white" onclick="buyNow()">Comprar agora</button>
+        <button class="px-4 py-2 rounded-lg glass border" onclick="addToCartFromModal()">Adicionar ao carrinho</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Dados iniciais de produtos (substitua imagens e descrições reais)
+    const products = [
+      {id:1,name:'Analgésico 500mg',desc:'Alívio para dores e febre',price:12.9,img:'https://images.unsplash.com/photo-1580281657521-4f9f3c3b2d79?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'},
+      {id:2,name:'Máscara 3M',desc:'Máscara de proteção descartável',price:9.5,img:'https://images.unsplash.com/photo-1583947582885-3a2b9f2b7b2d?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'},
+      {id:3,name:'Xarope Infantil',desc:'Alívio para tosse',price:19.9,img:'https://images.unsplash.com/photo-1582719478173-0b0ac7e1b3c2?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'},
+      {id:4,name:'Vitaminas C',desc:'Fortalece o sistema imunológico',price:29.9,img:'https://images.unsplash.com/photo-1542144582-1ba004e5cfd6?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'},
+      {id:5,name:'Hidratante',desc:'Hidratante corporal 400ml',price:34.9,img:'https://images.unsplash.com/photo-1585238342029-2b5de7f3d3a3?q=80&w=600&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder'}
+    ];
+
+    // Monta grid de produtos
+    const grid = document.getElementById('productGrid');
+    const tpl = document.getElementById('productTpl');
+    products.forEach(p=>{
+      const clone = tpl.content.cloneNode(true);
+      clone.querySelector('img').src = p.img;
+      clone.querySelector('img').alt = p.name;
+      clone.querySelector('.font-semibold').textContent = p.name;
+      clone.querySelector('.text-xs').textContent = p.desc;
+      clone.querySelector('.text-lg').textContent = 'R$ ' + p.price.toFixed(2).replace('.',',');
+      clone.querySelectorAll('button')[0].setAttribute('onclick',`openQuickView(${JSON.stringify(p.name)},${JSON.stringify(p.desc)},${p.price})`);
+      clone.querySelectorAll('button')[1].setAttribute('onclick',`addToCart(${JSON.stringify(p.name)},${p.price})`);
+      grid.appendChild(clone);
+    });
+
+    // Carrinho simples
+    let cart = [];
+    function addToCart(name,price){
+      cart.push({name,price});
+      document.getElementById('cartCount').textContent = cart.length;
+      alert(name + ' adicionado ao carrinho!');
+    }
+    function addToCartFromModal(){
+      const name = document.getElementById('modalTitle').textContent;
+      const price = parseFloat(document.getElementById('modalPrice').dataset.value);
+      addToCart(name,price);
+      closeModal();
+    }
+    document.getElementById('cartBtn').addEventListener('click',()=>{
+      if(cart.length===0) return alert('Carrinho vazio');
+      let text = 'Itens no carrinho:\n';
+      cart.forEach((c,i)=>text += `${i+1}. ${c.name} — R$ ${c.price.toFixed(2)}\n`);
+      text += `\nTotal: R$ ${cart.reduce((s,i)=>s+i.price,0).toFixed(2)}`;
+      alert(text);
+    });
+
+    // Modal
+    function openQuickView(title,desc,price){
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalDesc').textContent = desc;
+      document.getElementById('modalPrice').textContent = 'R$ ' + price.toFixed(2).replace('.',',');
+      document.getElementById('modalPrice').dataset.value = price;
+      document.getElementById('modal').classList.remove('hidden');
+      document.getElementById('modal').classList.add('flex');
+    }
+    function closeModal(){document.getElementById('modal').classList.add('hidden');document.getElementById('modal').classList.remove('flex');}
+    function buyNow(){alert('Redirecionando para pagamento (mock)...');}
+
+    // Formulário
+    document.getElementById('contactForm').addEventListener('submit',function(e){
+      e.preventDefault();
+      document.getElementById('formMsg').classList.remove('hidden');
+      setTimeout(()=>{document.getElementById('formMsg').classList.add('hidden');document.getElementById('contactForm').reset()},2500);
+    });
+
+    // Mobile menu
+    document.getElementById('menuBtn').addEventListener('click',()=>{
+      const nav = document.querySelector('nav');
+      nav.classList.toggle('hidden');
+    });
+
+    // Pequena função para placeholder addToCart on hero card
+    function addToCartHero(){ addToCart('Kit Bem-Estar',79.9); }
+
+    // Quick view on hero uses different signature
+    function openQuickView(name,desc,price){
+      if(typeof name === 'string'){
+        document.getElementById('modalTitle').textContent = name;
+        document.getElementById('modalDesc').textContent = desc;
+        document.getElementById('modalPrice').textContent = 'R$ ' + price.toFixed(2).replace('.',',');
+        document.getElementById('modalPrice').dataset.value = price;
+        document.getElementById('modal').classList.remove('hidden');
+        document.getElementById('modal').classList.add('flex');
+      }
+    }
+
+  </script>
+</body>
+</html>
